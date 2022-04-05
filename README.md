@@ -74,12 +74,30 @@ let (data, httpUrlResponse) = try await HTTP.postJson(
 
 Use SPM:
 
-```swift
-// [...]
-// in "DEPENDENCIES"
-  .package(url: "https://github.com/jaredh159/x-http.git", from: "1.0.0")
-// [...]
-// in "TARGETS"
-  .product(name: "XHttp", package: "x-http"),
-// [...]
+```diff
+// swift-tools-version:5.5
+import PackageDescription
+
+let package = Package(
+  name: "RadProject",
+  products: [
+    .library(name: "RadProject", targets: ["RadProject"]),
+  ],
+  dependencies: [
++   .package(url: "https://github.com/jaredh159/x-http.git", from: "1.0.0")
+  ],
+  targets: [
+    .target(name: "RadProject", dependencies: [
++     .product(name: "XHttp", package: "x-http"),
+    ]),
+  ]
+)
 ```
+
+## Used by
+
+A few basic higher-level client/sdk's built on top of `XHttp` include:
+
+- [XSendGrid](https://github.com/jaredh159/x-sendgrid)
+- [XSlack](https://github.com/jaredh159/x-slack)
+- [XStripe](https://github.com/jaredh159/x-stripe)
